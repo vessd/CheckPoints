@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CheckPoints.Logic
 {
-    public class Set : Entity
+    public class Set : AggregateRoot
     {
-        private readonly List<Group> _groups;
+        private readonly IList<Group> _groups;
 
-        public Name Name { get; }
+        public virtual Project Project { get; protected set; }
 
-        public IReadOnlyList<Group> Groups { get; }
+        public virtual Name Name { get; protected set; }
 
-        public Set(Name name)
+        public virtual ReadOnlyCollection<Group> Groups => new ReadOnlyCollection<Group>(_groups);
+
+        protected Set()
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-
             _groups = new List<Group>();
         }
 
-        public bool AddGroup(Name name, int position)
+        internal Set(Project project, Name name) : this()
+        {
+            Project = project ?? throw new ArgumentNullException(nameof(project));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
+
+        public virtual bool AddGroup(Name name, int position)
         {
             if (_groups.Any(cp => cp.Name == name))
                 return false;
@@ -30,5 +35,7 @@ namespace CheckPoints.Logic
 
             return true;
         }
+
+        protected override Type GetRealType() => typeof(Set);
     }
 }

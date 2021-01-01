@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CheckPoints.Logic
 {
-    public class CheckPoint : Entity
+    public class CheckPoint : AggregateRoot
     {
         private readonly List<State> _states;
 
@@ -37,5 +37,7 @@ namespace CheckPoints.Logic
 
             return true;
         }
+
+        protected override Type GetRealType() => typeof(CheckPoint);
     }
 }

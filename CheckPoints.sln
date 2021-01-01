@@ -4,13 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckPoints.Editor", "CheckPoints.Editor\CheckPoints.Editor.csproj", "{57095A54-3F6D-43BD-90AB-75B761A5C9D6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FFA768DA-AC00-4EF4-B793-0B98917EA43A} = {FFA768DA-AC00-4EF4-B793-0B98917EA43A}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckPoints.Logic", "CheckPoints.Logic\CheckPoints.Logic.csproj", "{FFA768DA-AC00-4EF4-B793-0B98917EA43A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckPoints.Logic", "CheckPoints.Logic\CheckPoints.Logic.csproj", "{FFA768DA-AC00-4EF4-B793-0B98917EA43A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckPoints.Tests", "CheckPoints.Tests\CheckPoints.Tests.csproj", "{BBFD5420-22AA-440D-812C-CF255D5DE22C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckPoints.Tests", "CheckPoints.Tests\CheckPoints.Tests.csproj", "{BBFD5420-22AA-440D-812C-CF255D5DE22C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckPoints.NHibernate", "CheckPoints.NHibernate\CheckPoints.NHibernate.csproj", "{928A5BEA-BCF4-4BF1-B27A-D9E30403403C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +29,10 @@ Global
 		{BBFD5420-22AA-440D-812C-CF255D5DE22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBFD5420-22AA-440D-812C-CF255D5DE22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBFD5420-22AA-440D-812C-CF255D5DE22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928A5BEA-BCF4-4BF1-B27A-D9E30403403C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928A5BEA-BCF4-4BF1-B27A-D9E30403403C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928A5BEA-BCF4-4BF1-B27A-D9E30403403C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928A5BEA-BCF4-4BF1-B27A-D9E30403403C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

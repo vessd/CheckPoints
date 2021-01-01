@@ -6,6 +6,8 @@ namespace CheckPoints.Logic
     {
         private readonly string _name;
 
+        protected Name() { }
+
         public Name(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

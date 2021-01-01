@@ -21,5 +21,7 @@ namespace CheckPoints.Logic
             User = user ?? throw new ArgumentNullException(nameof(user));
             DateCreated = dateCreated;
         }
+
+        protected override Type GetRealType() => typeof(Record);
     }
 }

@@ -7,7 +7,10 @@
         x:Class="CheckPoints.Editor.Main.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="CheckPoints.Editor">
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    
+    <Grid ColumnDefinitions="300,*">
+        <TreeView />
+        <ContentPresenter Grid.Column="1" />
+    </Grid>
 
 </Window>

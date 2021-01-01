@@ -33,5 +33,7 @@ namespace CheckPoints.Logic
                    state.CheckPoint == CheckPoint &&
                   (state.Percent > Percent || Transitions.Contains(state));
         }
+
+        protected override Type GetRealType() => typeof(State);
     }
 }

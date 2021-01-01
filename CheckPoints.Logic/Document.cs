@@ -47,5 +47,7 @@ namespace CheckPoints.Logic
             }
             return false;
         }
+
+        protected override Type GetRealType() => typeof(Document);
     }
 }

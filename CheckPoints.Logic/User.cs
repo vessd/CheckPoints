@@ -10,5 +10,7 @@ namespace CheckPoints.Logic
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
+
+        protected override Type GetRealType() => typeof(User);
     }
 }

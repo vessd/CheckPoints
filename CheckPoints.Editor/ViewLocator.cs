@@ -5,7 +5,7 @@ using System;
 
 namespace CheckPoints.Editor
 {
-    public class ViewLocator : IDataTemplate
+    internal class ViewLocator : IDataTemplate
     {
         public bool SupportsRecycling => false;
 

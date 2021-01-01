@@ -1,8 +1,10 @@
-﻿namespace CheckPoints.Logic
+﻿using System;
+
+namespace CheckPoints.Logic
 {
     public abstract class Entity
     {
-        public long Id { get; private set; }
+        public virtual long Id { get; protected set; }
 
         public override bool Equals(object obj)
         {
@@ -12,7 +14,7 @@
             if (ReferenceEquals(this, other))
                 return true;
 
-            if (GetType() != other.GetType())
+            if (GetRealType() != other.GetRealType())
                 return false;
 
             if (Id == 0 || other.Id == 0)
@@ -39,7 +41,9 @@
 
         public override int GetHashCode()
         {
-            return (GetType().ToString() + Id).GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode();
         }
+
+        protected abstract Type GetRealType();
     }
 }

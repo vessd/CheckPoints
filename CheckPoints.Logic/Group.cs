@@ -4,38 +4,39 @@ using System.Linq;
 
 namespace CheckPoints.Logic
 {
-    public class Group : Entity
+    public class Group : AggregateRoot
     {
-        private readonly List<CheckPoint> _checkPoints;
+        public virtual Set Set { get; protected set; }
 
-        public Set Set { get; }
+        public virtual Name Name { get; protected set; }
 
-        public Name Name { get; }
+        public virtual int Position { get; protected set; }
 
-        public int Position { get; internal set; }
+        protected virtual IList<CheckPoint> CheckPoints { get; }
 
-        public IReadOnlyList<CheckPoint> CheckPoints => _checkPoints;
+        protected Group()
+        {
+            CheckPoints = new List<CheckPoint>();
+        }
 
-        protected Group() { }
-
-        internal Group(Set set, Name name, int position)
+        internal Group(Set set, Name name, int position) : this()
         {
             Set = set ?? throw new ArgumentNullException(nameof(set));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             if (position < 1) throw new ArgumentOutOfRangeException(nameof(position));
             Position = position;
-
-            _checkPoints = new List<CheckPoint>();
         }
 
-        public bool AddCheckPoint(Name name, int position)
+        public virtual bool AddCheckPoint(Name name, int position)
         {
-            if (_checkPoints.Any(cp => cp.Name == name))
+            if (CheckPoints.Any(cp => cp.Name == name))
                 return false;
 
-            _checkPoints.Add(new CheckPoint(this, name, position));
+            CheckPoints.Add(new CheckPoint(this, name, position));
 
             return true;
         }
+
+        protected override Type GetRealType() => typeof(Group);
     }
 }
