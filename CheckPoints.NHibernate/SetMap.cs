@@ -1,5 +1,4 @@
 ﻿using CheckPoints.Logic;
-using FluentNHibernate;
 using FluentNHibernate.Mapping;
 
 namespace CheckPoints.NHibernate
@@ -13,8 +12,7 @@ namespace CheckPoints.NHibernate
 
             References(x => x.Project).Column("id_project").Not.LazyLoad();
             Component(x => x.Name);
-            HasMany<Group>(Reveal.Member<Set>("_groups")).KeyColumn("id_doc_kt_set").Cascade.All().Not.LazyLoad();
-            HasMany(x => x.Groups).KeyColumn("id_doc_kt_set").ReadOnly().Not.LazyLoad();
+            HasMany(x => x.Groups).Access.CamelCaseField(Prefix.Underscore).KeyColumn("id_doc_kt_set").Cascade.All().Not.LazyLoad();
         }
     }
 }

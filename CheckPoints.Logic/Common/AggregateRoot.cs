@@ -1,4 +1,4 @@
-﻿namespace CheckPoints.Logic
+﻿namespace CheckPoints.Logic.Common
 {
     public abstract class AggregateRoot : Entity
     {

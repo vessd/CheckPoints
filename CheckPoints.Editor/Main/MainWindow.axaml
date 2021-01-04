@@ -1,15 +1,28 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:main="clr-namespace:CheckPoints.Editor.Main;assembly=CheckPoints.Editor"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:main="clr-namespace:CheckPoints.Editor.Main;assembly=CheckPoints.Editor"
+        xmlns:logic="clr-namespace:CheckPoints.Logic;assembly=CheckPoints.Logic"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CheckPoints.Editor.Main.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="CheckPoints.Editor">
     
     <Grid ColumnDefinitions="300,*">
-        <TreeView />
+        <TreeView x:Name="NavigationTree" Items="{Binding Projects}">
+            <TreeView.DataTemplates>
+                <TreeDataTemplate DataType="logic:Project" ItemsSource="{Binding Sets}">
+                    <TextBlock Text="{Binding Name}" />
+                </TreeDataTemplate>
+                <TreeDataTemplate DataType="logic:Set" ItemsSource="{Binding Groups}">
+                    <TextBlock Text="{Binding Name}" />
+                </TreeDataTemplate>
+                <DataTemplate DataType="logic:Group">
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </TreeView.DataTemplates>
+        </TreeView>
         <ContentPresenter Grid.Column="1" />
     </Grid>
 

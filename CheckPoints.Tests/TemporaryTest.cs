@@ -1,4 +1,5 @@
 ﻿using CheckPoints.NHibernate;
+using CheckPoints.NHibernate.Common;
 using Xunit;
 
 namespace CheckPoints.Tests
@@ -16,7 +17,7 @@ namespace CheckPoints.Tests
             set.AddGroup(new Name("Контрагенты"), 2);
             var saveTask = repository.Save(set);
             saveTask.Wait();*/
-            var setTask = repository.GetById(2);
+            var setTask = repository.GetByIdAsync(2);
             setTask.Wait();
             var set = setTask.Result;
         }

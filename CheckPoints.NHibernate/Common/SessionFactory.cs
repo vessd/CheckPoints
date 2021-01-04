@@ -1,9 +1,10 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
+using NHibernate.Logging.Serilog;
 using System.Reflection;
 
-namespace CheckPoints.NHibernate
+namespace CheckPoints.NHibernate.Common
 {
     public static class SessionFactory
     {
@@ -21,8 +22,10 @@ namespace CheckPoints.NHibernate
 
         private static ISessionFactory BuildSessionFactory(string connectionString)
         {
+            NHibernateLogger.SetLoggersFactory(new SerilogLoggerFactory());
+
             return Fluently.Configure()
-                           .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString))
+                           .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString).ShowSql().FormatSql())
                            .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
                            .BuildSessionFactory();
         }

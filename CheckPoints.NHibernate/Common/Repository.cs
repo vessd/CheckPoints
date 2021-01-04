@@ -1,12 +1,12 @@
-﻿using CheckPoints.Logic;
+﻿using CheckPoints.Logic.Common;
 using System.Threading.Tasks;
 
-namespace CheckPoints.NHibernate
+namespace CheckPoints.NHibernate.Common
 {
-    public abstract class Repository<T> : ReadOnlyRepository<T>
+    public abstract class Repository<T> : ReadOnlyRepository<T>, IRepository<T>
         where T : AggregateRoot
     {
-        public async Task Save(T aggregateRoot)
+        public async Task SaveAsync(T aggregateRoot)
         {
             using (var session = SessionFactory.OpenSession())
             {

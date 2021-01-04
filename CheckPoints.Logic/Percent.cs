@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CheckPoints.Logic.Common;
+using System;
 
 namespace CheckPoints.Logic
 {

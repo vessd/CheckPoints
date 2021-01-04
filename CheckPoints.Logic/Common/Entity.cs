@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CheckPoints.Logic
+namespace CheckPoints.Logic.Common
 {
     public abstract class Entity
     {
