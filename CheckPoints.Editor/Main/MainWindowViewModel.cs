@@ -1,52 +1,34 @@
 ﻿using CheckPoints.Editor.Common;
 using CheckPoints.Logic;
-using CheckPoints.NHibernate;
+using DynamicData.Binding;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
+using System.Reactive;
 using System.Reactive.Linq;
 
 namespace CheckPoints.Editor.Main
 {
-    public class MainWindowViewModel : ViewModelBase, IActivatableViewModel
+    internal class MainWindowViewModel : ViewModelBase, IActivatableViewModel
     {
         private readonly IProjectRepository _projectRepository;
 
-        private bool _isInitialized;
-
-        public bool IsInitialized
-        {
-            get => _isInitialized;
-            private set => this.RaiseAndSetIfChanged(ref _isInitialized, value);
-        }
-
-        private IReadOnlyList<Project> _projects;
-
-        public IReadOnlyList<Project> Projects
-        {
-            get => _projects;
-            private set => this.RaiseAndSetIfChanged(ref _projects, value);
-        }
+        private readonly ObservableAsPropertyHelper<ObservableCollectionExtended<Project>> _projects;
+        public ObservableCollectionExtended<Project> Projects => _projects.Value;
+        public ReactiveCommand<Unit, IList<Project>> LoadProjects { get; }
 
         public MainWindowViewModel()
         {
-            _projectRepository = new ProjectRepository();
+            _projectRepository = Locator.Current.GetService<IProjectRepository>();
 
-            this.WhenActivated(disposables =>
+            LoadProjects = ReactiveCommand.CreateFromTask(_projectRepository.GetWithSets);
+            _projects = LoadProjects.Select(list => new ObservableCollectionExtended<Project>(list))
+                                    .ToProperty(this, x => x.Projects, scheduler: RxApp.MainThreadScheduler);
+            LoadProjects.ThrownExceptions.Subscribe(exception =>
             {
-                LoadProjects().DisposeWith(disposables);
+                this.Log().Error("Error!", exception);
             });
-        }
-
-        private IDisposable LoadProjects()
-        {
-            return Observable.StartAsync(_projectRepository.GetWithSets)
-                .Subscribe(projects =>
-                {
-                    Projects = new List<Project>(projects);
-                    IsInitialized = true;
-                });
         }
 
         public ViewModelActivator Activator { get; } = new ViewModelActivator();

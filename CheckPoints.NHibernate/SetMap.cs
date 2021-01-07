@@ -12,7 +12,10 @@ namespace CheckPoints.NHibernate
 
             References(x => x.Project).Column("id_project").Not.LazyLoad();
             Component(x => x.Name);
-            HasMany(x => x.Groups).Access.CamelCaseField(Prefix.Underscore).KeyColumn("id_doc_kt_set").Cascade.All().Not.LazyLoad();
+            HasMany(x => x.Groups).Access.CamelCaseField(Prefix.Underscore)
+                                         .KeyColumn("id_doc_kt_set")
+                                         .Cascade.All()
+                                         .Not.LazyLoad();
         }
     }
 }

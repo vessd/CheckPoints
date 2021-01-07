@@ -25,7 +25,7 @@ namespace CheckPoints.NHibernate.Common
             NHibernateLogger.SetLoggersFactory(new SerilogLoggerFactory());
 
             return Fluently.Configure()
-                           .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString).ShowSql().FormatSql())
+                           .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString))
                            .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
                            .BuildSessionFactory();
         }

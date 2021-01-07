@@ -3,7 +3,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CheckPoints.Editor.Main;
 using CheckPoints.NHibernate.Common;
-using Serilog;
 
 namespace CheckPoints.Editor
 {
@@ -23,16 +22,9 @@ namespace CheckPoints.Editor
                 {
                     DataContext = new MainWindowViewModel(),
                 };
-
-                desktop.Exit += Desktop_Exit;
             }
 
             base.OnFrameworkInitializationCompleted();
-        }
-
-        private void Desktop_Exit(object sender, ControlledApplicationLifetimeExitEventArgs e)
-        {
-            Log.CloseAndFlush();
         }
     }
 }

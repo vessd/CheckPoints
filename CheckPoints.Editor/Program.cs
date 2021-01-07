@@ -1,39 +1,49 @@
 ﻿using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
+using CheckPoints.Logic;
+using CheckPoints.NHibernate;
 using Serilog;
 using Serilog.Events;
+using Splat;
+using Splat.Serilog;
 using System;
 
 namespace CheckPoints.Editor
 {
     internal class Program
     {
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
         public static void Main(string[] args)
         {
+            /*RxApp.DefaultExceptionHandler = new ExceptionHandler();*/
             InitializeLogging();
+            Register();
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .UseReactiveUI();
-
         private static void InitializeLogging()
         {
-            Log.Logger = new LoggerConfiguration()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Warning()
                 /*.MinimumLevel.Override("NHibernate", LogEventLevel.Debug)*/
                 .MinimumLevel.Override("NHibernate.SQL", LogEventLevel.Debug)
                 .WriteTo.Async(a => a.File($"logs/{DateTime.Now.ToString("s").Replace(":", ".")}.log"))
                 .CreateLogger();
 
-            SerilogLogger.Initialize(Log.Logger);
+            Log.Logger = logger;
+            SerilogLogger.Initialize(logger);
+            Locator.CurrentMutable.UseSerilogFullLogger(logger);
         }
+
+        private static void Register()
+        {
+            Locator.CurrentMutable.RegisterConstant(new ProjectRepository(), typeof(IProjectRepository));
+            //Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
+        }
+
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .UseReactiveUI();
     }
 }

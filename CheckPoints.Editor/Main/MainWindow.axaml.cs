@@ -2,11 +2,14 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using DynamicData.Binding;
 using ReactiveUI;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 
 namespace CheckPoints.Editor.Main
 {
-    public class MainWindow : ReactiveWindow<MainWindowViewModel>
+    internal class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public TreeView NavigationTree => this.FindControl<TreeView>("NavigationTree");
 
@@ -20,12 +23,15 @@ namespace CheckPoints.Editor.Main
 
         private void InitializeComponent()
         {
-            AvaloniaXamlLoader.Load(this);
-
             this.WhenActivated(disposables =>
             {
-                //this.OneWayBind(ViewModel, x => x.Projects, x => x.NavigationTree.Items).DisposeWith(disposables);
+                this.WhenPropertyChanged(x => x.ViewModel)
+                    .Where(x => x.Value != null)
+                    .InvokeCommand(this, x => x.ViewModel.LoadProjects)
+                    .DisposeWith(disposables);
             });
+
+            AvaloniaXamlLoader.Load(this);
         }
     }
 }
